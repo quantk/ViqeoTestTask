@@ -31,13 +31,13 @@ final class ImageService
             $uploadedFile,
             sprintf('%s.%s', (string)$jobId, $uploadedFile->getClientOriginalExtension())
         );
-        $imageResize = ImageResize::create([
-            'id' => $jobId,
-            'width' => $width,
-            'height' => $height,
-            'original_path' => $path,
-            'status' => StatusModel::IN_WORK
-        ]);
+        $imageResize = new ImageResize();
+        $imageResize->id = $jobId;
+        $imageResize->width = $width;
+        $imageResize->height = $height;
+        $imageResize->original_path = $path;
+        $imageResize->status = StatusModel::IN_WORK;
+        $imageResize->save();
         ResizeImageJob::dispatch($imageResize);
 
         return $jobId;
