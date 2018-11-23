@@ -6,7 +6,6 @@ use App\Http\Requests\UploadImageRequest;
 use App\ImageResize;
 use App\Service\ImageService;
 use App\Service\StatusModel;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
@@ -48,15 +47,15 @@ class ImageController extends Controller
             ]);
         }
 
-        try {
-            $resizedImagePath = Storage::url($imageResize->resized_path);
-            return $this->json([
-                'status_code' => $imageResize->status,
-                'status' => StatusModel::STATUS_MESSAGES[$imageResize->status],
-                'url' => $resizedImagePath
-            ]);
-        } catch (FileNotFoundException $e) {
+        if (false === Storage::exists($imageResize->resized_path)) {
             throw new NotFoundHttpException('Image not found');
         }
+
+        $resizedImagePath = Storage::url($imageResize->resized_path);
+        return $this->json([
+            'status_code' => $imageResize->status,
+            'status' => StatusModel::STATUS_MESSAGES[$imageResize->status],
+            'url' => $resizedImagePath
+        ]);
     }
 }
