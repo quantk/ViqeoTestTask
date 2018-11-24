@@ -6,7 +6,6 @@ use App\ImageResize;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -36,7 +35,7 @@ class ResizeImageJob implements ShouldQueue
      * Execute the job.
      *
      * @param ImageManager $imageManager
-     * @param FilesystemManager $filesystemManager
+     * @param LoggerInterface $logger
      * @return void
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
