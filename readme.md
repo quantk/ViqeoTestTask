@@ -11,6 +11,7 @@
 git clone git@github.com:drumser/ViqeoTestTask.git viqeo
 cd viqeo
 composer install
+php artisan migrate
 ```
 
 # Настройка
