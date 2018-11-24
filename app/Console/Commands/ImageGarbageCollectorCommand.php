@@ -47,7 +47,6 @@ class ImageGarbageCollectorCommand extends Command
      */
     public function handle()
     {
-        $t = 1;
         ImageResize::query()->where('destroy_time', '<', Carbon::now())->chunk(self::CHUNK_SIZE, function ($imageResizes) {
             foreach ($imageResizes as $imageResize) {
                 /** @var $imageResize ImageResize */
